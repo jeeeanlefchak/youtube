@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtbe/CustomSearchDelegate.dart';
 import 'package:youtbe/telas/Biblioteca.dart';
 import 'package:youtbe/telas/Incri%C3%A7%C3%A3o.dart';
 import 'package:youtbe/telas/Inicio.dart';
@@ -10,12 +11,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _indiceAtual = 0;
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> _telas = [
       Inicio(),
       EmAlta(),
@@ -36,17 +35,19 @@ class _HomeState extends State<Home> {
           height: 22,
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.videocam),
-            onPressed: () {},
-          ),
+//          IconButton(
+//            icon: Icon(Icons.videocam),
+//            onPressed: () {},
+//          ),
+//          IconButton(
+//            icon: Icon(Icons.account_circle),
+//            onPressed: () {},
+//          ),
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () {},
+            onPressed: () async {
+              String res = await showSearch(context: context, delegate: CustomSearchDeletagete());
+            },
           ),
         ],
       ),
@@ -55,30 +56,24 @@ class _HomeState extends State<Home> {
         child: _telas[_indiceAtual],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _indiceAtual,
-        onTap: (indice){
-          setState(() {
-            _indiceAtual = indice;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.red,
-        items:[
-          BottomNavigationBarItem(
-            title: Text("inicio"),
-            icon: Icon(Icons.home)
-          ),BottomNavigationBarItem(
-            title: Text("Em alta"),
-            icon: Icon(Icons.whatshot)
-          ),BottomNavigationBarItem(
-            title: Text("Inscrições"),
-            icon: Icon(Icons.subscriptions)
-          ),BottomNavigationBarItem(
-            title: Text("Biblioteca"),
-            icon: Icon(Icons.folder)
-          ),
-        ]
-      ),
+          currentIndex: _indiceAtual,
+          onTap: (indice) {
+            setState(() {
+              _indiceAtual = indice;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          fixedColor: Colors.red,
+          items: [
+            BottomNavigationBarItem(
+                title: Text("inicio"), icon: Icon(Icons.home)),
+            BottomNavigationBarItem(
+                title: Text("Em alta"), icon: Icon(Icons.whatshot)),
+            BottomNavigationBarItem(
+                title: Text("Inscrições"), icon: Icon(Icons.subscriptions)),
+            BottomNavigationBarItem(
+                title: Text("Biblioteca"), icon: Icon(Icons.folder)),
+          ]),
     );
   }
 }
