@@ -3,12 +3,17 @@ import 'package:youtbe/Api.dart';
 import 'package:youtbe/Model/Video.dart';
 
 class Inicio extends StatefulWidget {
+
+  String pesquisa;
+
+  Inicio(this.pesquisa);
+
   @override
   _InicioState createState() => _InicioState();
 }
 
 class _InicioState extends State<Inicio> {
-  _listarVideos() {
+  _listarVideos(String p) {
     Api api = Api();
     return api.pesquisar("");
   }
@@ -16,7 +21,7 @@ class _InicioState extends State<Inicio> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Video>>(
-      future: _listarVideos(),
+      future: _listarVideos(widget.pesquisa),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
