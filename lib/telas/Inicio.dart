@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:youtbe/Api.dart';
 import 'package:youtbe/Model/Video.dart';
+import 'package:flutter_youtube/flutter_youtube.dart';
 
 class Inicio extends StatefulWidget {
-
   String pesquisa;
 
   Inicio(this.pesquisa);
@@ -38,22 +38,32 @@ class _InicioState extends State<Inicio> {
                     List<Video> videos = snapshot.data;
                     Video video = videos[index];
 
-                    return Column(
-                      children: <Widget>[
-                        Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                                image: NetworkImage(video.imagem)),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(video.titulo),
-                          subtitle: Text(video.descricao),
-                        )
-                      ],
-                    );
+                    return GestureDetector(
+                        onTap: () {
+                          FlutterYoutube.playYoutubeVideoById(
+                              apiKey: CHAVE_YOUTUBE_API,
+                              videoId: video.id,
+                              autoPlay: true,
+                              fullScreen: true
+                          );
+
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(video.imagem)),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(video.titulo),
+                              subtitle: Text(video.descricao),
+                            )
+                          ],
+                        ));
                   },
                   separatorBuilder: (context, index) => Divider(
                         height: 2,
